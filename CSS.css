@@ -1,0 +1,472 @@
+/* ========== Reset & Base ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 40%, #2d1b69 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+/* ========== Container ========== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ========== Header ========== */
+header {
+    text-align: center;
+    padding: 30px 0 20px;
+    animation: fadeInDown 0.8s ease-out;
+}
+header h1 {
+    font-size: 2.8rem;
+    background: linear-gradient(90deg, #00d2ff, #7b2ff7, #ff6ec7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+.subtitle {
+    font-size: 1.2rem;
+    color: #8fa8d8;
+    letter-spacing: 1px;
+}
+
+/* ========== Main Layout ========== */
+main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* ========== Map Section ========== */
+.map-section {
+    position: relative;
+}
+
+.map-container {
+    position: relative;
+    border-radius: 20px;
+    overflow: visible;
+    box-shadow: 0 0 40px rgba(0, 100, 255, 0.3), 0 0 80px rgba(123, 47, 247, 0.15);
+    border: 2px solid rgba(100, 150, 255, 0.2);
+    background: #0d1b2a;
+    animation: fadeIn 1s ease-out;
+}
+
+.map-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.85;
+}
+
+/* ========== Hotspots ========== */
+.hotspot {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.hotspot-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #00d2ff, #7b2ff7);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.5), 0 0 30px rgba(123, 47, 247, 0.3);
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.3);
+    z-index: 20;
+}
+
+.hotspot:hover .hotspot-number {
+    background: linear-gradient(135deg, #ff6ec7, #ff9a44);
+    box-shadow: 0 0 25px rgba(255, 110, 199, 0.7), 0 0 50px rgba(255, 154, 68, 0.4);
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+.hotspot.active .hotspot-number {
+    background: linear-gradient(135deg, #ff6ec7, #ff9a44);
+    box-shadow: 0 0 25px rgba(255, 110, 199, 0.7);
+    border-color: #fff;
+}
+
+/* ========== Tooltip ========== */
+.tooltip {
+    position: absolute;
+    bottom:50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgba(13, 27, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    width: 220px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 30;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Only move selected tooltips below the button */
+.tooltip-down .tooltip {
+    top: 45px;
+    bottom: auto;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.tooltip-down .tooltip::after {
+    top: -16px;
+    bottom: auto;
+    border: 8px solid transparent;
+    border-bottom-color: rgba(13, 27, 42, 0.95);
+    border-top-color: transparent;
+}
+
+.tooltip-down:hover .tooltip {
+    transform: translateX(-50%) translateY(0);
+}
+
+.tooltip::after {
+    /*"::after is a pseudo-element that generates a virtual child element at the very end of the .tooltip element's content."*/
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(13, 27, 42, 0.95);
+}
+
+.tooltip h3 {
+    color: #00d2ff;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.2);
+    padding-bottom: 5px;
+}
+.tooltip p {
+    font-size: 0.82rem;
+    color: #b0c4de;
+    line-height: 1.4;
+}
+
+.hotspot:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+.hotspot.active .hotspot-number {
+    background: linear-gradient(135deg, #ff6ec7, #ff9a44);
+    box-shadow: 0 0 25px rgba(255, 110, 199, 0.7);
+    border-color: #fff;
+}
+
+/* ========== Tooltip ========== */
+.tooltip {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(13, 27, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    width: 220px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 30;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(13, 27, 42, 0.95);
+}
+
+.tooltip h3 {
+    color: #00d2ff;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+.tooltip p {
+    font-size: 0.82rem;
+    color: #b0c4de;
+    line-height: 1.4;
+}
+
+.hotspot:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========== Info Panel ========== */
+.info-panel {
+    background: rgba(13, 27, 42, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(100, 150, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.8s ease-out;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.info-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.info-panel::-webkit-scrollbar-thumb {
+    background: rgba(100, 150, 255, 0.3);
+    border-radius: 3px;
+}
+
+.info-placeholder {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.info-placeholder h2 {
+    color: #00d2ff;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.info-placeholder p {
+    color: #8fa8d8;
+    line-height: 1.6;
+}
+
+/* Selected attraction info */
+.attraction-info {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.attraction-info .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #00d2ff, #7b2ff7);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.attraction-info h2 {
+    color: #fff;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #00d2ff, #ff6ec7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.attraction-info p {
+    color: #b0c4de;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.attraction-info .details {
+    background: rgba(0, 100, 255, 0.1);
+    border-left: 3px solid #00d2ff;
+    padding: 12px 15px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 15px;
+}
+
+.attraction-info .details p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #8fa8d8;
+}
+
+/* ========== Legend ========== */
+.legend {
+    margin-top: 30px;
+    text-align: left;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(100, 150, 255, 0.15);
+}
+
+.legend h3 {
+    color: #00d2ff;
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+
+.legend ul {
+    list-style: none;
+}
+
+.legend li {
+    padding: 6px 0;
+    color: #8fa8d8;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.08);
+}
+
+.legend li:last-child {
+    border-bottom: none;
+}
+
+/* ========== Footer ========== */
+footer {
+    text-align: center;
+    padding: 25px 0;
+    margin-top: 20px;
+    color: #5a7a9a;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(100, 150, 255, 0.1);
+}
+
+/* ========== Animations ========== */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.5), 0 0 30px rgba(123, 47, 247, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.8), 0 0 50px rgba(123, 47, 247, 0.5);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .info-panel {
+        max-height: none;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .hotspot {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hotspot-number {
+        font-size: 12px;
+    }
+
+    .tooltip {
+        width: 180px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .hotspot {
+        width: 26px;
+        height: 26px;
+    }
+
+    .hotspot-number {
+        font-size: 11px;
+        border-width: 2px;
+    }
+
+    .tooltip {
+        display: none;
+    }
+}
+
